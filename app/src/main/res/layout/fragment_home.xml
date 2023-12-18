@@ -1,14 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
     tools:context=".FragmentHome">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+    <ImageButton
+        android:id="@+id/imageEncode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/encode"
+        tools:ignore="SpeakableTextPresentCheck" />
 
-</FrameLayout>
+    <Button
+        android:id="@+id/button1"
+        android:layout_width="390dp"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#3949AB"
+        android:gravity="center"
+        android:text="ENCODE"
+        android:textStyle="bold" />
+
+    <ImageButton
+        android:id="@+id/imageDecode"
+        android:layout_width="310dp"
+        android:layout_height="194dp"
+        android:src="@drawable/decoder"
+        tools:ignore="SpeakableTextPresentCheck" />
+
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="389dp"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#3949AB"
+        android:text="DECODE"
+        android:textStyle="bold" />
+
+
+
+</LinearLayout>
