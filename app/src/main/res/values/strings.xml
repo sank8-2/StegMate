@@ -2,6 +2,35 @@
     <string name="app_name">StegMate</string>
     <string name="openDrawer">Open Navigation Drawer</string>
     <string name="closeDrawer">Close Navigation Drawer</string>
+    <string name="logo">UBDTCE logo</string>
+    <string name="username">Enter USN</string>
+    <string name="pass">Enter Password</string>
+    <string name="displaySignIn">Student Sign In</string>
+    <string name="btnSignIn">Sign In</string>
+    <string name="flashOne">New User?</string>
+    <string name="displayRegister">Student Registration</string>
+    <string name="flashTwo">Register Now</string>
+    <string name="name">Name</string>
+    <string name="phone">Phone Number</string>
+    <string name="email">Email</string>
+    <string name="conPass">Confirm Password</string>
+    <string name="btnSignUp">Sign Up</string>
+    <string name="success">Registration Successfull</string>
+    <string name="successOne">Click</string>
+    <string name="successTwo">Here</string>
+    <string name="successThree">to Login</string>
+    <string name="title_activity_navigation">Navigation</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+
+    <string name="menu_home">Home</string>
+    <string name="menu_gallery">Gallery</string>
+    <string name="menu_slideshow">Slideshow</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

@@ -10,6 +10,9 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.ContentValues;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
@@ -36,17 +39,23 @@ public class MainActivity extends AppCompatActivity {
         navigationBar.addDrawerListener(toggle);
         toggle.syncState();
 
+        loadFragment(new FragmentHome());
+
         navView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                 int id=menuItem.getItemId();
                 if(id==R.id.optHome){
                     loadFragment(new FragmentHome());
-                } else if (id==R.id.optRegister) {
+                } else if (id==R.id.optProfile) {
                     loadFragment(new FragmentHome());
 
                 }
-                else if (id==R.id.optLogin) {
+                else if (id==R.id.optHistory) {
+                    loadFragment(new FragmentHome());
+
+                }
+                else if (id==R.id.optContact) {
                     loadFragment(new FragmentHome());
 
                 }
@@ -88,6 +97,29 @@ public class MainActivity extends AppCompatActivity {
         ft.replace(R.id.container, fragment);
         ft.commit();
     }
+
+
+
+    public void goToLogin(View view) {
+
+        SharedPreferences preferences=getSharedPreferences("Login",MODE_PRIVATE);
+        SharedPreferences.Editor editor=preferences.edit();
+
+        Intent i=new Intent(MainActivity.this,Signin.class);
+        editor.putBoolean("flag",false);
+        editor.apply();
+        startActivity(i);
+        finish();
+    }
+
+    public void receiveFragment(ContentValues contentValues){
+
+        DBHelper dbHelper=new DBHelper(this);
+
+        dbHelper.updateStudent(contentValues);
+
+    }
+
 
 
     public void goToEncode() {

@@ -12,7 +12,25 @@
         android:theme="@style/Theme.StegMate"
         tools:targetApi="31">
         <activity
+            android:name=".StudentModel"
+            android:exported="false" />
+        <activity
+            android:name=".DBHelper"
+            android:exported="false" />
+        <activity
+            android:name=".RegSuccess"
+            android:exported="false" />
+        <activity
+            android:name=".Signup"
+            android:exported="false" />
+        <activity
+            android:name=".Signin"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
+            android:exported="false" />
+        <activity
+            android:name=".SplashScreen"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

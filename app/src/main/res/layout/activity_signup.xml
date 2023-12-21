@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent"
+    tools:context=".Signup"
+    android:gravity="center_horizontal"
+    android:padding="20dp">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingVertical="40dp"
+        android:text="@string/displayRegister"
+        android:textAlignment="center"
+
+        android:textSize="34sp" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/name"
+        android:id="@+id/name"
+        android:inputType="text"
+        android:layout_marginVertical="10dp"
+        android:autofillHints="Name"
+        android:textSize="20sp" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/phone"
+        android:id="@+id/phone"
+        android:inputType="phone"
+        android:layout_marginVertical="10dp"
+        android:autofillHints="Name"
+        android:textSize="20sp" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/username"
+        android:id="@+id/username"
+        android:inputType="text"
+        android:layout_marginVertical="10dp"
+        android:autofillHints="Name"
+        android:textSize="20sp" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/email"
+        android:id="@+id/email"
+        android:inputType="textEmailAddress"
+        android:layout_marginVertical="10dp"
+        android:autofillHints="Name"
+        android:textSize="20sp" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/pass"
+        android:id="@+id/pass"
+        android:layout_marginVertical="10dp"
+
+        android:inputType="textPassword"
+        android:autofillHints="Pass"
+        android:textSize="20sp" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/conPass"
+        android:id="@+id/conPass"
+        android:layout_marginVertical="10dp"
+
+        android:inputType="textPassword"
+        android:autofillHints="Pass"
+        android:textSize="20sp" />
+
+    <Button
+        android:id="@+id/btnSignUp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/btnSignUp"
+        android:layout_marginVertical="10dp"
+        />
+
+</LinearLayout>

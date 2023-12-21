@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    tools:context=".RegSuccess">
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/success"
+        android:textSize="40sp"
+        android:textAlignment="center"
+        >
+
+    </TextView>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/successOne"
+            android:inputType="textLongMessage"
+            android:text="@string/successOne"
+            android:textSize="18sp"
+            />
+
+        <TextView
+            android:id="@+id/successTwo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@+id/successOne"
+            android:inputType="textLongMessage"
+
+            android:text="@string/successTwo"
+            android:textColor="#3F51B5"
+            android:textSize="18sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/successThree"
+            android:inputType="textLongMessage"
+            android:layout_marginLeft="10dp"
+            android:text="@string/successThree"
+            android:textSize="18sp"
+            android:layout_toRightOf="@+id/successTwo"
+            />
+
+    </RelativeLayout>
+
+</LinearLayout>
