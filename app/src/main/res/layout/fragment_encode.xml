@@ -48,19 +48,31 @@
         android:orientation="horizontal"
         android:gravity="center">
 
-        <TextView
+        <!--<TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Select File: "
             android:textSize="26sp"
-            />
-        <TextView
+            />-->
+        <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Image"
+            android:text="Select Image"
             android:textSize="26sp"
+            android:id="@+id/selectImageBtn"
             />
 
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="20sp"
+        android:orientation="horizontal"
+        android:gravity="center">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/imageUpload"/>
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
