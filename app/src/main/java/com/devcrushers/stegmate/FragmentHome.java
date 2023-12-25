@@ -1,5 +1,6 @@
 package com.devcrushers.stegmate;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -25,14 +26,16 @@ public class FragmentHome extends Fragment {
         encode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((MainActivity)getActivity()).goToEncode();
+                Intent i = new Intent(((MainActivity)getActivity()),Encode.class);
+                startActivity(i);
             }
         });
 
         decode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((MainActivity)getActivity()).goToDecode();
+                Intent i = new Intent(((MainActivity)getActivity()),Decode.class);
+                startActivity(i);
             }
         });
 

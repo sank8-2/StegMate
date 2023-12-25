@@ -1,5 +1,7 @@
 package com.devcrushers.stegmate;
 
-public class StudentModel {
+import android.app.Activity;
+
+public class StudentModel extends Activity {
     String name,usn,email,phone,pass;
 }

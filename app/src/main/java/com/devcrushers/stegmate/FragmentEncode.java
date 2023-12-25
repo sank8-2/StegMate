@@ -20,7 +20,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class FragmentEncode extends Fragment {
+import com.ayush.imagesteganographylibrary.Text.AsyncTaskCallback.TextEncodingCallback;
+import com.ayush.imagesteganographylibrary.Text.ImageSteganography;
+import com.ayush.imagesteganographylibrary.Text.TextEncoding;
+
+public class FragmentEncode extends Fragment implements TextEncodingCallback {
 
     public FragmentEncode() {
         // Required empty public constructor
@@ -28,7 +32,7 @@ public class FragmentEncode extends Fragment {
 
     private final int CAMERA_REQ_CODE=10;
     private final int GALLERY_REQ_CODE=100;
-    ImageView imgCamera;
+    ImageView imgCamera,encoded;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -37,6 +41,7 @@ public class FragmentEncode extends Fragment {
         View view=inflater.inflate(R.layout.fragment_encode, container, false);
 
         imgCamera = view.findViewById(R.id.imageUpload);
+        encoded= view.findViewById(R.id.displayEncodedImage);
         Button btnCamera = view.findViewById(R.id.selectCamBtn);
         Button btnGallery = view.findViewById(R.id.selectImageBtn);
         Button btnEncode = view.findViewById(R.id.encodeBtn);
@@ -61,7 +66,17 @@ public class FragmentEncode extends Fragment {
             }
         });
 
+        ImageSteganography imageSteganography = new ImageSteganography(secretMessage.toString(),privateKey.toString(),imgCamera.getDrawingCache());
+        TextEncoding textEncoding = new TextEncoding((MainActivity)getActivity(),this);
 
+
+
+        btnEncode.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                textEncoding.execute(imageSteganography);
+            }
+        });
 
 //        Log.d("myTag",);
 
@@ -82,6 +97,25 @@ public class FragmentEncode extends Fragment {
             if (requestCode==GALLERY_REQ_CODE){
                 imgCamera.setImageURI(data.getData());
             }
+        }
+    }
+
+    @Override
+    public void onStartTextEncoding() {
+
+    }
+
+    @Override
+    public void onCompleteTextEncoding(ImageSteganography result) {
+//        this.result = result;
+
+        if (result != null && result.isEncoded()) {
+
+            //encrypted image bitmap is extracted from result object
+            Bitmap encoded_image = result.getEncoded_image();
+
+            //set text and image to the UI component.
+            encoded.setImageBitmap(encoded_image);
         }
     }
 }

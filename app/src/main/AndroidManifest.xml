@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -12,10 +13,10 @@
         android:theme="@style/Theme.StegMate"
         tools:targetApi="31">
         <activity
-            android:name=".StudentModel"
+            android:name=".Decode"
             android:exported="false" />
         <activity
-            android:name=".DBHelper"
+            android:name=".Encode"
             android:exported="false" />
         <activity
             android:name=".RegSuccess"
@@ -38,6 +39,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <provider
+            android:authorities="com.devcrushers.stegmate"
+            android:name="androidx.core.content.FileProvider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+
     </application>
 
 </manifest>

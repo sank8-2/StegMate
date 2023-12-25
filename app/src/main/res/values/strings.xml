@@ -2,13 +2,13 @@
     <string name="app_name">StegMate</string>
     <string name="openDrawer">Open Navigation Drawer</string>
     <string name="closeDrawer">Close Navigation Drawer</string>
-    <string name="logo">UBDTCE logo</string>
-    <string name="username">Enter USN</string>
+    <string name="logo">StegMate Logo</string>
+    <string name="username">Enter Username</string>
     <string name="pass">Enter Password</string>
-    <string name="displaySignIn">Student Sign In</string>
+    <string name="displaySignIn">Sign In</string>
     <string name="btnSignIn">Sign In</string>
     <string name="flashOne">New User?</string>
-    <string name="displayRegister">Student Registration</string>
+    <string name="displayRegister">Registration</string>
     <string name="flashTwo">Register Now</string>
     <string name="name">Name</string>
     <string name="phone">Phone Number</string>

@@ -5,15 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="20sp"
-    tools:context=".FragmentEncode">
+    android:padding="20sp">
 
     <TextView
         android:id="@+id/textView3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="ENCODE"
-        android:inputType="number"
+        android:text="DECODE"
         android:textSize="55sp"
         android:textStyle="bold"
         android:gravity="center"
@@ -22,56 +20,22 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"    android:padding="20sp"
-
-        android:gravity="center">
-
-        <TextView
-            android:id="@+id/textView4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Process ID: "
-            android:textSize="26sp"
-            />
-        <TextView
-            android:id="@+id/textView5"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="420"
-            android:textSize="26sp"
-            />
-
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:padding="20sp"
         android:orientation="horizontal"
         android:gravity="center">
 
-        <!--<TextView
+        <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Select File: "
             android:textSize="26sp"
-            />-->
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Camera"
-            android:textSize="18sp"
-            android:id="@+id/selectCamBtn"
+            android:id="@+id/choose_image_button"
             />
-        <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="5px"
-        android:text="Gallery"
-        android:textSize="18sp"
-        android:id="@+id/selectImageBtn"
-        />
+
 
     </LinearLayout>
+
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -79,10 +43,11 @@
         android:gravity="center">
         <ImageView
             android:layout_width="wrap_content"
-            android:layout_height="120sp"
+            android:layout_height="200sp"
             android:src="@drawable/bg"
-            android:id="@+id/imageUpload"/>
+            android:id="@+id/imageview"/>
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -97,62 +62,58 @@
             android:textSize="26sp"
             />
         <EditText
-            android:layout_width="80sp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/privateKey"
             android:textSize="26sp"
+            android:id="@+id/secret_key"
             />
 
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:padding="20sp"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:orientation="horizontal"
-        android:gravity="center">
+        android:padding="20sp">
+
+        <Button
+            android:id="@+id/decode_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Decode" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:padding="20sp">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Secret Message: "
-            android:textSize="26sp"
-            />
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:id="@+id/secretMessage"
-            android:textSize="26sp"
-            />
+            android:textSize="26sp" />
 
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="20sp"
-        android:orientation="horizontal"
-        android:gravity="center">
-
-        <Button
-            android:id="@+id/encodeBtn"
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Encode"
-            />
+            android:text=""
+            android:id="@+id/message"
+            android:textSize="26sp" />
 
     </LinearLayout>
 
 
-    <LinearLayout
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/whether_decoded"
+        android:layout_width="70dp"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center">
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="120sp"
-            android:src="@drawable/bg"
-            android:id="@+id/displayEncodedImage"/>
-    </LinearLayout>
-
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:textStyle="bold" />
 
 </LinearLayout>
