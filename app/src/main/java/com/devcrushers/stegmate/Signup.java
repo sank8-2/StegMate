@@ -34,9 +34,7 @@ public class Signup extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                if (pass.getText().toString().length() >= 8 &&
-                        pass.getText().toString().equals(conPass.getText().toString()) &&
-                        validatePassword(pass.getText().toString())) {
+                if (pass.getText().toString().equals(conPass.getText().toString())) {
                     Toast.makeText(getBaseContext(), "Successful Sign UP", Toast.LENGTH_LONG).show();
                     Intent i = new Intent(Signup.this, RegSuccess.class);
 
@@ -57,6 +55,5 @@ public class Signup extends AppCompatActivity {
         pattern = Pattern.compile(PASSWORD_PATTERN);
         matcher = pattern.matcher(password);
         return matcher.matches();
-
     }
 }

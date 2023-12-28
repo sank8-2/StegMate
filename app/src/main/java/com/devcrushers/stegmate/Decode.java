@@ -1,5 +1,6 @@
 package com.devcrushers.stegmate;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -29,7 +30,7 @@ public class Decode extends AppCompatActivity implements TextDecodingCallback{
     private TextView message;
     private EditText secret_key;
     private Uri filepath;
-    //Bitmap
+    private final int GALLERY_REQ_CODE=100;
     private Bitmap original_image;
 
     @Override
@@ -51,8 +52,10 @@ public class Decode extends AppCompatActivity implements TextDecodingCallback{
         //Choose Image Button
         choose_image_button.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                ImageChooser();
+            public void onClick(View v) {
+                Intent iGallery = new Intent(Intent.ACTION_PICK);
+                iGallery.setData(MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(iGallery,GALLERY_REQ_CODE);
             }
         });
 
@@ -78,6 +81,17 @@ public class Decode extends AppCompatActivity implements TextDecodingCallback{
 
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode==RESULT_OK){
+            if (requestCode==GALLERY_REQ_CODE){
+                imageView.setImageURI(data.getData());
+            }
+        }
+    }
+
     private void ImageChooser() {
         Intent intent = new Intent();
         intent.setType("image/*");
@@ -85,7 +99,7 @@ public class Decode extends AppCompatActivity implements TextDecodingCallback{
         startActivityForResult(Intent.createChooser(intent, "Select Picture"), SELECT_PICTURE);
     }
 
-    @Override
+    /*@Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
@@ -102,7 +116,7 @@ public class Decode extends AppCompatActivity implements TextDecodingCallback{
             }
         }
 
-    }
+    }*/
 
     @Override
     public void onStartTextEncoding() {

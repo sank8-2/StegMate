@@ -121,7 +121,7 @@ public class Encode extends AppCompatActivity implements TextEncodingCallback {
         if (resultCode==RESULT_OK){
 
             if (requestCode==CAMERA_REQ_CODE) {
-                Bitmap img = (Bitmap) (data.getExtras().get("data"));
+                Bitmap img = (Bitmap) data.getExtras().get("data");
                 imgCamera.setImageBitmap(img);
             }
 
@@ -153,8 +153,7 @@ public class Encode extends AppCompatActivity implements TextEncodingCallback {
     private void saveToInternalStorage(Bitmap bitmapImage) {
         num= (random.nextInt(999999-100000)+100000);
         OutputStream fOut;
-        File file = new File(Environment.getExternalStoragePublicDirectory(
-                Environment.DIRECTORY_DOWNLOADS), "Encoded" + num + ".PNG"); // the File to save ,
+        File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), "Encoded" + num + ".png"); // the File to save ,
         try {
             fOut = new FileOutputStream(file);
             bitmapImage.compress(Bitmap.CompressFormat.PNG, 100, fOut); // saving the Bitmap to a file

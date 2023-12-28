@@ -21,8 +21,6 @@ import com.google.android.material.navigation.NavigationView;
 
 public class MainActivity extends AppCompatActivity {
     DrawerLayout navigationBar;
-    Fragment fragmentEncode=new FragmentEncode();
-    Fragment fragmentDecode=new DecodeFragment();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -118,15 +116,5 @@ public class MainActivity extends AppCompatActivity {
 
         dbHelper.updateStudent(contentValues);
 
-    }
-
-
-
-    public void goToEncode() {
-        loadFragment(fragmentEncode);
-    }
-
-    public void goToDecode() {
-        loadFragment(fragmentDecode);
     }
 }

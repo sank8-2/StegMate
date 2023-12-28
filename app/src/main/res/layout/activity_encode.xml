@@ -19,7 +19,7 @@
             android:gravity="center"
             />
 
-        <LinearLayout
+        <!--<LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"    android:padding="20sp"
@@ -41,7 +41,7 @@
                 android:textSize="26sp"
                 />
 
-        </LinearLayout>
+        </LinearLayout>-->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -79,7 +79,7 @@
             android:gravity="center">
             <ImageView
                 android:layout_width="wrap_content"
-                android:layout_height="120sp"
+                android:layout_height="200sp"
                 android:src="@drawable/bg"
                 android:id="@+id/imageUpload"/>
         </LinearLayout>
@@ -99,6 +99,7 @@
             <EditText
                 android:layout_width="80sp"
                 android:layout_height="wrap_content"
+                android:inputType="number"
                 android:id="@+id/privateKey"
                 android:textSize="26sp"
                 />
@@ -151,10 +152,11 @@
     <TextView
         android:id="@+id/whether_encoded"
         android:layout_width="70dp"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:textStyle="bold" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -162,7 +164,7 @@
             android:gravity="center">
             <ImageView
                 android:layout_width="wrap_content"
-                android:layout_height="120sp"
+                android:layout_height="200sp"
                 android:src="@drawable/bg"
                 android:id="@+id/displayEncodedImage"/>
         </LinearLayout>
