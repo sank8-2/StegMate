@@ -19,6 +19,9 @@
             android:name=".Encode"
             android:exported="false" />
         <activity
+            android:name=".Encoded"
+            android:exported="false" />
+        <activity
             android:name=".RegSuccess"
             android:exported="false" />
         <activity

@@ -57,7 +57,7 @@ public class Encode extends AppCompatActivity implements TextEncodingCallback {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_encode);
         imgCamera = findViewById(R.id.imageUpload);
-        encoded = findViewById(R.id.displayEncodedImage);
+//        encoded = findViewById(R.id.displayEncodedImage);
         whether_encoded = findViewById(R.id.whether_encoded);
         ShapeableImageView btnCamera = findViewById(R.id.selectCamBtn);
         ShapeableImageView btnGallery = findViewById(R.id.selectImageBtn);
@@ -187,6 +187,13 @@ public class Encode extends AppCompatActivity implements TextEncodingCallback {
 
     }
 
+    public void send(Uri result)
+    {
+        Intent i = new Intent(Encode.this, Encoded.class);
+        i.putExtra("image",result);
+        startActivity(i);
+    }
+
     @Override
     public void onCompleteTextEncoding(ImageSteganography result) {
 //        this.result = result;
@@ -195,10 +202,11 @@ public class Encode extends AppCompatActivity implements TextEncodingCallback {
 
             //encrypted image bitmap is extracted from result object
             encoded_image = result.getEncoded_image();
+            encoded_uri = saveImage(encoded_image,Encode.this);
 //            uri = encoded_image;
-
+            send(encoded_uri);
             //set text and image to the UI component.
-            encoded.setImageBitmap(encoded_image);
+//            encoded.setImageBitmap(encoded_image);
         }
     }
 
