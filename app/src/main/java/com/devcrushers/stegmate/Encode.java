@@ -7,6 +7,7 @@ import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -15,7 +16,9 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.NumberPicker;
 import android.widget.TextView;
@@ -23,6 +26,7 @@ import android.widget.TextView;
 import com.ayush.imagesteganographylibrary.Text.AsyncTaskCallback.TextEncodingCallback;
 import com.ayush.imagesteganographylibrary.Text.ImageSteganography;
 import com.ayush.imagesteganographylibrary.Text.TextEncoding;
+import com.google.android.material.imageview.ShapeableImageView;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -51,12 +55,12 @@ public class Encode extends AppCompatActivity implements TextEncodingCallback {
         imgCamera = findViewById(R.id.imageUpload);
         encoded= findViewById(R.id.displayEncodedImage);
         whether_encoded = findViewById(R.id.whether_encoded);
-        Button btnCamera = findViewById(R.id.selectCamBtn);
-        Button btnGallery = findViewById(R.id.selectImageBtn);
-        Button btnEncode = findViewById(R.id.encodeBtn);
-        Button save_image_button = findViewById(R.id.saveBtn);
-        TextView privateKey = findViewById(R.id.privateKey);
-        TextView secretMessage = findViewById(R.id.secretMessage);
+        ShapeableImageView btnCamera = findViewById(R.id.selectCamBtn);
+        ShapeableImageView btnGallery = findViewById(R.id.selectImageBtn);
+        ShapeableImageView btnEncode = findViewById(R.id.encodeBtn);
+//        Button save_image_button = findViewById(R.id.saveBtn);
+        EditText privateKey = findViewById(R.id.privateKey);
+        EditText secretMessage = findViewById(R.id.secretMessage);
 
         btnCamera.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,6 +80,25 @@ public class Encode extends AppCompatActivity implements TextEncodingCallback {
             }
         });
 
+        secretMessage.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (!hasFocus) {
+                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(v.getWindowToken(),0);
+                }
+            }
+        });
+
+        privateKey.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (!hasFocus) {
+                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(v.getWindowToken(),0);
+                }
+            }
+        });
 
 
 
@@ -92,7 +115,7 @@ public class Encode extends AppCompatActivity implements TextEncodingCallback {
             }
         });
 
-        save_image_button.setOnClickListener(new View.OnClickListener() {
+        /*save_image_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 final Bitmap imgToSave = encoded_image;
@@ -110,7 +133,7 @@ public class Encode extends AppCompatActivity implements TextEncodingCallback {
                 save.show();
                 PerformEncoding.start();
             }
-        });
+        });*/
 
     }
 
@@ -153,7 +176,7 @@ public class Encode extends AppCompatActivity implements TextEncodingCallback {
     private void saveToInternalStorage(Bitmap bitmapImage) {
         num= (random.nextInt(999999-100000)+100000);
         OutputStream fOut;
-        File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), "Encoded" + num + ".png"); // the File to save ,
+        File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM), "/Encoded/img_" + num + ".jpeg"); // the File to save ,
         try {
             fOut = new FileOutputStream(file);
             bitmapImage.compress(Bitmap.CompressFormat.PNG, 100, fOut); // saving the Bitmap to a file

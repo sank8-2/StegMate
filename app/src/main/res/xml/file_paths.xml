@@ -1,0 +1,1 @@
+<paths>     <files-path name="files_root" path="/storage/emulated" />     <files-path name="external_storage_root" path="." /> </paths>
