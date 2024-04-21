@@ -1,1 +1,14 @@
-<paths>     <files-path name="files_root" path="/storage/emulated" />     <files-path name="external_storage_root" path="." /> </paths>
+<paths>
+    <files-path
+        name="files_root"
+        path="/storage/emulated" />
+    <files-path
+        name="external_storage_root"
+        path="." />
+    <external-cache-path
+        name="external_cache"
+        path="." />
+    <cache-path
+        name="cache"
+        path="." />
+</paths>

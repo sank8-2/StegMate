@@ -12,6 +12,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -33,27 +34,30 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.Executor;
 
 public class Encode extends AppCompatActivity implements TextEncodingCallback {
-    private final int CAMERA_REQ_CODE=10;
-    Random random=new Random();
-    private final int GALLERY_REQ_CODE=100;
+    private final int CAMERA_REQ_CODE = 10;
+    Random random = new Random();
+    private final int GALLERY_REQ_CODE = 100;
     private ProgressDialog save;
-    ImageView imgCamera,encoded;
+    ImageView imgCamera, encoded;
     private Bitmap original_image;
     private TextView whether_encoded;
     private Bitmap encoded_image;
     private int num;
+    private Uri encoded_uri;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_encode);
         imgCamera = findViewById(R.id.imageUpload);
-        encoded= findViewById(R.id.displayEncodedImage);
+        encoded = findViewById(R.id.displayEncodedImage);
         whether_encoded = findViewById(R.id.whether_encoded);
         ShapeableImageView btnCamera = findViewById(R.id.selectCamBtn);
         ShapeableImageView btnGallery = findViewById(R.id.selectImageBtn);
@@ -66,7 +70,7 @@ public class Encode extends AppCompatActivity implements TextEncodingCallback {
             @Override
             public void onClick(View v) {
                 Intent iCamera = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                startActivityForResult(iCamera,CAMERA_REQ_CODE);
+                startActivityForResult(iCamera, CAMERA_REQ_CODE);
 
             }
         });
@@ -76,7 +80,7 @@ public class Encode extends AppCompatActivity implements TextEncodingCallback {
             public void onClick(View v) {
                 Intent iGallery = new Intent(Intent.ACTION_PICK);
                 iGallery.setData(MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult(iGallery,GALLERY_REQ_CODE);
+                startActivityForResult(iGallery, GALLERY_REQ_CODE);
             }
         });
 
@@ -85,7 +89,7 @@ public class Encode extends AppCompatActivity implements TextEncodingCallback {
             public void onFocusChange(View v, boolean hasFocus) {
                 if (!hasFocus) {
                     InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                    imm.hideSoftInputFromWindow(v.getWindowToken(),0);
+                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
                 }
             }
         });
@@ -95,21 +99,19 @@ public class Encode extends AppCompatActivity implements TextEncodingCallback {
             public void onFocusChange(View v, boolean hasFocus) {
                 if (!hasFocus) {
                     InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                    imm.hideSoftInputFromWindow(v.getWindowToken(),0);
+                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
                 }
             }
         });
-
-
 
 
         btnEncode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                original_image= ((BitmapDrawable) imgCamera.getDrawable()).getBitmap();
-                ImageSteganography imageSteganography = new ImageSteganography(secretMessage.getText().toString(),privateKey.getText().toString(),original_image);
-                TextEncoding textEncoding = new TextEncoding(Encode.this,Encode.this);
+                original_image = ((BitmapDrawable) imgCamera.getDrawable()).getBitmap();
+                ImageSteganography imageSteganography = new ImageSteganography(secretMessage.getText().toString(), privateKey.getText().toString(), original_image);
+                TextEncoding textEncoding = new TextEncoding(Encode.this, Encode.this);
 
                 textEncoding.execute(imageSteganography);
             }
@@ -141,17 +143,43 @@ public class Encode extends AppCompatActivity implements TextEncodingCallback {
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (resultCode==RESULT_OK){
+        if (resultCode == RESULT_OK) {
 
-            if (requestCode==CAMERA_REQ_CODE) {
+            if (requestCode == CAMERA_REQ_CODE) {
+                Uri camImgUri;
                 Bitmap img = (Bitmap) data.getExtras().get("data");
-                imgCamera.setImageBitmap(img);
+
+                WeakReference<Bitmap> result = new WeakReference<>(Bitmap.createScaledBitmap(img, img.getWidth(), img.getHeight(), false).copy(
+                        Bitmap.Config.RGB_565, true
+                ));
+
+                Bitmap bm=result.get();
+
+                camImgUri=saveImage(bm,Encode.this);
+                imgCamera.setImageURI(camImgUri);
+
+//                imgCamera.setImageBitmap(bm);
             }
 
-            if (requestCode==GALLERY_REQ_CODE){
+            if (requestCode == GALLERY_REQ_CODE) {
                 imgCamera.setImageURI(data.getData());
             }
         }
+    }
+
+    private Uri saveImage(Bitmap image, Context context) {
+        File imagesFolder=new File(context.getCacheDir(),"images");
+        Uri uri=null;
+        try {
+            imagesFolder.mkdirs();
+            File file = new File(imagesFolder,"captured_image.jpg");
+            FileOutputStream stream=new FileOutputStream(file);
+            image.compress(Bitmap.CompressFormat.JPEG,100,stream);
+            uri=Uri.fromFile(file);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return uri;
     }
 
     @Override
@@ -167,6 +195,7 @@ public class Encode extends AppCompatActivity implements TextEncodingCallback {
 
             //encrypted image bitmap is extracted from result object
             encoded_image = result.getEncoded_image();
+//            uri = encoded_image;
 
             //set text and image to the UI component.
             encoded.setImageBitmap(encoded_image);
@@ -174,7 +203,7 @@ public class Encode extends AppCompatActivity implements TextEncodingCallback {
     }
 
     private void saveToInternalStorage(Bitmap bitmapImage) {
-        num= (random.nextInt(999999-100000)+100000);
+        num = (random.nextInt(999999 - 100000) + 100000);
         OutputStream fOut;
         File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM), "/Encoded/img_" + num + ".jpeg"); // the File to save ,
         try {
