@@ -3,6 +3,7 @@ package com.devcrushers.stegmate;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -10,6 +11,7 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -18,6 +20,7 @@ import android.widget.TextView;
 import com.ayush.imagesteganographylibrary.Text.AsyncTaskCallback.TextDecodingCallback;
 import com.ayush.imagesteganographylibrary.Text.ImageSteganography;
 import com.ayush.imagesteganographylibrary.Text.TextDecoding;
+import com.google.android.material.imageview.ShapeableImageView;
 
 import java.io.IOException;
 
@@ -26,11 +29,10 @@ public class Decode extends AppCompatActivity implements TextDecodingCallback{
     private static final String TAG = "Decode Class";
     //Initializing the UI components
     private TextView textView;
-    private ImageView imageView;
+    private ShapeableImageView imageView;
     private TextView message;
     private EditText secret_key;
     private Uri filepath;
-    private final int GALLERY_REQ_CODE=100;
     private Bitmap original_image;
 
     @Override
@@ -46,16 +48,27 @@ public class Decode extends AppCompatActivity implements TextDecodingCallback{
         message = findViewById(R.id.message);
         secret_key = findViewById(R.id.secret_key);
 
-        Button choose_image_button = findViewById(R.id.choose_image_button);
-        Button decode_button = findViewById(R.id.decode_button);
+        ShapeableImageView choose_image_button = findViewById(R.id.choose_image_button);
+        ShapeableImageView decode_button = findViewById(R.id.decode_button);
+
+        secret_key.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (!hasFocus) {
+                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+                }
+            }
+        });
 
         //Choose Image Button
         choose_image_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent iGallery = new Intent(Intent.ACTION_PICK);
-                iGallery.setData(MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult(iGallery,GALLERY_REQ_CODE);
+                Intent intent = new Intent();
+                intent.setType("image/*");
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+                startActivityForResult(Intent.createChooser(intent, "Select Picture"), SELECT_PICTURE);
             }
         });
 
@@ -85,9 +98,16 @@ public class Decode extends AppCompatActivity implements TextDecodingCallback{
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (resultCode==RESULT_OK){
-            if (requestCode==GALLERY_REQ_CODE){
-                imageView.setImageURI(data.getData());
+        //Image set to imageView
+        if (requestCode == SELECT_PICTURE && resultCode == RESULT_OK && data != null && data.getData() != null) {
+
+            filepath = data.getData();
+            try {
+                original_image = MediaStore.Images.Media.getBitmap(getContentResolver(), filepath);
+
+                imageView.setImageBitmap(original_image);
+            } catch (IOException e) {
+                Log.d(TAG, "Error : " + e);
             }
         }
     }

@@ -10,9 +10,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 
+import com.google.android.material.imageview.ShapeableImageView;
+
 public class FragmentHome extends Fragment {
 
-    ImageButton encode, decode;
+    ShapeableImageView encode, decode;
     public FragmentHome() {
         // Required empty public constructor
     }

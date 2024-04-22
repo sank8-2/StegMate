@@ -42,14 +42,12 @@ import java.util.concurrent.Executor;
 
 public class Encode extends AppCompatActivity implements TextEncodingCallback {
     private final int CAMERA_REQ_CODE = 10;
-    Random random = new Random();
     private final int GALLERY_REQ_CODE = 100;
-    private ProgressDialog save;
-    ImageView imgCamera, encoded;
+    ImageView imgCamera;
     private Bitmap original_image;
-    private TextView whether_encoded;
+//    private TextView whether_encoded;
     private Bitmap encoded_image;
-    private int num;
+
     private Uri encoded_uri;
 
     @Override
@@ -58,11 +56,9 @@ public class Encode extends AppCompatActivity implements TextEncodingCallback {
         setContentView(R.layout.activity_encode);
         imgCamera = findViewById(R.id.imageUpload);
 //        encoded = findViewById(R.id.displayEncodedImage);
-        whether_encoded = findViewById(R.id.whether_encoded);
         ShapeableImageView btnCamera = findViewById(R.id.selectCamBtn);
         ShapeableImageView btnGallery = findViewById(R.id.selectImageBtn);
         ShapeableImageView btnEncode = findViewById(R.id.encodeBtn);
-//        Button save_image_button = findViewById(R.id.saveBtn);
         EditText privateKey = findViewById(R.id.privateKey);
         EditText secretMessage = findViewById(R.id.secretMessage);
 
@@ -117,25 +113,7 @@ public class Encode extends AppCompatActivity implements TextEncodingCallback {
             }
         });
 
-        /*save_image_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                final Bitmap imgToSave = encoded_image;
-                Thread PerformEncoding = new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        saveToInternalStorage(imgToSave);
-                    }
-                });
-                save = new ProgressDialog(Encode.this);
-                save.setMessage("Saving, Please Wait...");
-                save.setTitle("Saving Image");
-                save.setIndeterminate(false);
-                save.setCancelable(false);
-                save.show();
-                PerformEncoding.start();
-            }
-        });*/
+
 
     }
 
@@ -187,7 +165,7 @@ public class Encode extends AppCompatActivity implements TextEncodingCallback {
 
     }
 
-    public void send(Uri result)
+    public void send(Bitmap result)
     {
         Intent i = new Intent(Encode.this, Encoded.class);
         i.putExtra("image",result);
@@ -204,31 +182,9 @@ public class Encode extends AppCompatActivity implements TextEncodingCallback {
             encoded_image = result.getEncoded_image();
             encoded_uri = saveImage(encoded_image,Encode.this);
 //            uri = encoded_image;
-            send(encoded_uri);
+            send(encoded_image);
             //set text and image to the UI component.
 //            encoded.setImageBitmap(encoded_image);
-        }
-    }
-
-    private void saveToInternalStorage(Bitmap bitmapImage) {
-        num = (random.nextInt(999999 - 100000) + 100000);
-        OutputStream fOut;
-        File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DCIM), "/Encoded/img_" + num + ".jpeg"); // the File to save ,
-        try {
-            fOut = new FileOutputStream(file);
-            bitmapImage.compress(Bitmap.CompressFormat.PNG, 100, fOut); // saving the Bitmap to a file
-            fOut.flush(); // Not really required
-            fOut.close(); // do not forget to close the stream
-            whether_encoded.post(new Runnable() {
-                @Override
-                public void run() {
-                    save.dismiss();
-                }
-            });
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
         }
     }
 
