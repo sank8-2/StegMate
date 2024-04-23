@@ -16,6 +16,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -106,9 +107,15 @@ public class Encode extends AppCompatActivity implements TextEncodingCallback {
             public void onClick(View view) {
 
                 original_image = ((BitmapDrawable) imgCamera.getDrawable()).getBitmap();
+
+                /*WeakReference<Bitmap> result = new WeakReference<>(Bitmap.createScaledBitmap(original_image, (int) (original_image.getWidth()*0.5), (int) (original_image.getHeight()*0.5), false).copy(
+                        Bitmap.Config.RGB_565, true
+                ));
+
+                Bitmap bm=result.get();*/
+
                 ImageSteganography imageSteganography = new ImageSteganography(secretMessage.getText().toString(), privateKey.getText().toString(), original_image);
                 TextEncoding textEncoding = new TextEncoding(Encode.this, Encode.this);
-
                 textEncoding.execute(imageSteganography);
             }
         });
@@ -127,25 +134,39 @@ public class Encode extends AppCompatActivity implements TextEncodingCallback {
                 Uri camImgUri;
                 Bitmap img = (Bitmap) data.getExtras().get("data");
 
-                WeakReference<Bitmap> result = new WeakReference<>(Bitmap.createScaledBitmap(img, img.getWidth(), img.getHeight(), false).copy(
+
+//                WeakReference<Bitmap> result = new WeakReference<>(Bitmap.createScaledBitmap(original_image, (int) (original_image.getWidth()*2), (int) (original_image.getHeight()*2), false).copy(
+//                        Bitmap.Config.RGB_565, true
+//                ));
+//
+//                Bitmap bm=result.get();
+
+
+                //camImgUri=saveImage(bm,Encode.this);
+                //imgCamera.setImageURI(camImgUri);
+
+                imgCamera.setImageBitmap(img);
+            }
+
+            if (requestCode == GALLERY_REQ_CODE) {
+                Bitmap image = null;
+                try {
+                    image = MediaStore.Images.Media.getBitmap(this.getContentResolver(),data.getData());
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                WeakReference<Bitmap> result = new WeakReference<>(Bitmap.createScaledBitmap(image, (int) (image.getWidth()*0.5), (int) (image.getHeight()*0.5), false).copy(
                         Bitmap.Config.RGB_565, true
                 ));
 
                 Bitmap bm=result.get();
-
-                camImgUri=saveImage(bm,Encode.this);
-                imgCamera.setImageURI(camImgUri);
-
-//                imgCamera.setImageBitmap(bm);
-            }
-
-            if (requestCode == GALLERY_REQ_CODE) {
-                imgCamera.setImageURI(data.getData());
+                imgCamera.setImageBitmap(bm);
+//                imgCamera.setImageURI(data.getData());
             }
         }
     }
 
-    private Uri saveImage(Bitmap image, Context context) {
+    /*private Uri saveImage(Bitmap image, Context context) {
         File imagesFolder=new File(context.getCacheDir(),"images");
         Uri uri=null;
         try {
@@ -158,7 +179,7 @@ public class Encode extends AppCompatActivity implements TextEncodingCallback {
             e.printStackTrace();
         }
         return uri;
-    }
+    }*/
 
     @Override
     public void onStartTextEncoding() {
@@ -168,7 +189,11 @@ public class Encode extends AppCompatActivity implements TextEncodingCallback {
     public void send(Bitmap result)
     {
         Intent i = new Intent(Encode.this, Encoded.class);
+        Log.d("kon hai3", "onCompleteTextEncoding: tell me");
+
         i.putExtra("image",result);
+        Log.d("kon hai4", "onCompleteTextEncoding: tell me");
+
         startActivity(i);
     }
 
@@ -177,14 +202,16 @@ public class Encode extends AppCompatActivity implements TextEncodingCallback {
 //        this.result = result;
 
         if (result != null && result.isEncoded()) {
-
+            Log.d("kon hai1", "onCompleteTextEncoding: tell me");
             //encrypted image bitmap is extracted from result object
             encoded_image = result.getEncoded_image();
-            encoded_uri = saveImage(encoded_image,Encode.this);
+            Log.d("kon hai2", "onCompleteTextEncoding: tell me");
+
+//            encoded_uri = saveImage(encoded_image,Encode.this);
 //            uri = encoded_image;
             send(encoded_image);
             //set text and image to the UI component.
-//            encoded.setImageBitmap(encoded_image);
+//            imgCamera.setImageBitmap(encoded_image);
         }
     }
 
