@@ -151,17 +151,7 @@
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:textStyle="bold" />
-        <TextView
-            android:id="@+id/message"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/custom_edit"
-            android:drawableStart="@drawable/message_foreground"
-            android:drawablePadding="10dp"
-            android:hint="Secret Message"
-            android:paddingRight="20sp"
-            android:textColorHint="@color/white"
-            android:textSize="26sp" />
+
     </LinearLayout>
 
 </LinearLayout>

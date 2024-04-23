@@ -30,7 +30,6 @@ public class Decode extends AppCompatActivity implements TextDecodingCallback{
     //Initializing the UI components
     private TextView textView;
     private ShapeableImageView imageView;
-    private TextView message;
     private EditText secret_key;
     private Uri filepath;
     private Bitmap original_image;
@@ -45,7 +44,6 @@ public class Decode extends AppCompatActivity implements TextDecodingCallback{
 
         imageView = findViewById(R.id.imageview);
 
-        message = findViewById(R.id.message);
         secret_key = findViewById(R.id.secret_key);
 
         ShapeableImageView choose_image_button = findViewById(R.id.choose_image_button);
@@ -154,7 +152,8 @@ public class Decode extends AppCompatActivity implements TextDecodingCallback{
             else {
                 if (!result.isSecretKeyWrong()) {
                     textView.setText("Decoded");
-                    message.setText("" + result.getMessage());
+                    send(result.getMessage());
+//                    message.setText("" + result.getMessage());
                 } else {
                     textView.setText("Wrong secret key");
                 }
@@ -164,5 +163,12 @@ public class Decode extends AppCompatActivity implements TextDecodingCallback{
         }
 
 
+    }
+
+    public void send(String result)
+    {
+        Intent i = new Intent(Decode.this, Decoded.class);
+        i.putExtra("msg",result);
+        startActivity(i);
     }
 }
